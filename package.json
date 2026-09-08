@@ -1,0 +1,145 @@
+{
+  "name": "dev-office-viewer",
+  "displayName": "Dev Office Viewer",
+  "description": "Visor local y de solo lectura para Word, Excel, PowerPoint, OpenDocument y PDF.",
+  "version": "0.1.0",
+  "publisher": "mau-local",
+  "license": "MIT",
+  "engines": {
+    "vscode": ">=1.90.0"
+  },
+  "categories": [
+    "Other",
+    "Visualization"
+  ],
+  "keywords": [
+    "office",
+    "word",
+    "excel",
+    "powerpoint",
+    "viewer",
+    "docx",
+    "xlsx",
+    "pptx",
+    "pdf"
+  ],
+  "main": "./dist/extension.js",
+  "activationEvents": [
+    "onCommand:devOffice.openPreview"
+  ],
+  "extensionKind": [
+    "workspace"
+  ],
+  "contributes": {
+    "commands": [
+      {
+        "command": "devOffice.openPreview",
+        "title": "Office Viewer: Abrir vista previa",
+        "icon": "$(preview)"
+      }
+    ],
+    "customEditors": [
+      {
+        "viewType": "devOffice.officeViewer",
+        "displayName": "Office Viewer (solo lectura)",
+        "selector": [
+          {
+            "filenamePattern": "*.doc"
+          },
+          {
+            "filenamePattern": "*.docx"
+          },
+          {
+            "filenamePattern": "*.xls"
+          },
+          {
+            "filenamePattern": "*.xlsx"
+          },
+          {
+            "filenamePattern": "*.ppt"
+          },
+          {
+            "filenamePattern": "*.pptx"
+          },
+          {
+            "filenamePattern": "*.odt"
+          },
+          {
+            "filenamePattern": "*.ods"
+          },
+          {
+            "filenamePattern": "*.odp"
+          }
+        ],
+        "priority": "default"
+      },
+      {
+        "viewType": "devOffice.pdfViewer",
+        "displayName": "Office Viewer: PDF",
+        "selector": [
+          {
+            "filenamePattern": "*.pdf"
+          }
+        ],
+        "priority": "option"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "devOffice.openPreview",
+          "when": "resourceExtname =~ /\\.(docx?|xlsx?|pptx?|odt|ods|odp|pdf)$/i",
+          "group": "navigation@15"
+        }
+      ]
+    },
+    "configuration": {
+      "title": "Dev Office Viewer",
+      "properties": {
+        "devOffice.libreOfficePath": {
+          "type": "string",
+          "default": "",
+          "description": "Ruta opcional al ejecutable de LibreOffice/soffice. Se usa para PowerPoint y formatos heredados/OpenDocument."
+        },
+        "devOffice.spreadsheet.maxRows": {
+          "type": "number",
+          "default": 1000,
+          "minimum": 50,
+          "maximum": 10000,
+          "description": "M\u00e1ximo de filas mostradas por hoja."
+        },
+        "devOffice.spreadsheet.maxColumns": {
+          "type": "number",
+          "default": 100,
+          "minimum": 10,
+          "maximum": 500,
+          "description": "M\u00e1ximo de columnas mostradas por hoja."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "build": "node esbuild.mjs",
+    "watch": "node esbuild.mjs --watch",
+    "lint": "node scripts/check-syntax.mjs",
+    "test": "node --test test/*.test.js",
+    "check": "npm run lint && npm run test && npm run build",
+    "vscode:prepublish": "npm run check",
+    "package": "node scripts/package.mjs"
+  },
+  "dependencies": {
+    "exceljs": "^4.4.0",
+    "jszip": "^3.10.1",
+    "mammoth": "^1.12.2",
+    "pdfjs-dist": "^6.3.289",
+    "sanitize-html": "^2.17.0"
+  },
+  "devDependencies": {
+    "@vscode/vsce": "^3.9.2",
+    "esbuild": "^0.25.9"
+  },
+  "overrides": {
+    "uuid": "^11.1.0"
+  },
+  "private": true
+}

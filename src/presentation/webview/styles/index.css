@@ -1,0 +1,313 @@
+:root {
+  color-scheme: light dark;
+  --toolbar-height: 46px;
+  --page-shadow: 0 12px 36px rgba(0, 0, 0, 0.22);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  min-height: 100%;
+  margin: 0;
+  color: var(--vscode-editor-foreground);
+  background: var(--vscode-editor-background);
+  font-family: var(--vscode-font-family);
+}
+
+button {
+  min-width: 30px;
+  height: 28px;
+  border: 1px solid var(--vscode-button-border, transparent);
+  border-radius: 4px;
+  color: var(--vscode-button-foreground);
+  background: var(--vscode-button-background);
+  cursor: pointer;
+}
+
+button:hover:not(:disabled) {
+  background: var(--vscode-button-hoverBackground);
+}
+
+button:focus-visible {
+  outline: 1px solid var(--vscode-focusBorder);
+  outline-offset: 2px;
+}
+
+button:disabled {
+  opacity: 0.45;
+  cursor: default;
+}
+
+.hidden {
+  display: none !important;
+}
+
+.toolbar {
+  position: sticky;
+  z-index: 20;
+  top: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: var(--toolbar-height);
+  padding: 0 12px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  background: var(--vscode-editor-background);
+}
+
+.document-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.readonly-badge {
+  flex: none;
+  padding: 2px 7px;
+  border-radius: 999px;
+  color: var(--vscode-badge-foreground);
+  background: var(--vscode-badge-background);
+  font-size: 11px;
+}
+
+.toolbar-spacer {
+  flex: 1;
+}
+
+.control-group {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-variant-numeric: tabular-nums;
+}
+
+#zoom-label,
+#page-label {
+  min-width: 52px;
+  text-align: center;
+  font-size: 12px;
+}
+
+.notice,
+.sheet-warning {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  color: var(--vscode-notificationsWarningIcon-foreground);
+  background: var(--vscode-textBlockQuote-background);
+  font-size: 12px;
+}
+
+#viewport {
+  min-height: calc(100vh - var(--toolbar-height));
+}
+
+.state-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  min-height: 60vh;
+  padding: 36px;
+  color: var(--vscode-descriptionForeground);
+  text-align: center;
+}
+
+.state-card p {
+  max-width: 700px;
+  margin: 0;
+  white-space: pre-wrap;
+}
+
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 3px solid var(--vscode-progressBar-background);
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.85s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.word-view {
+  overflow: auto;
+  padding: 28px;
+}
+
+.word-page {
+  width: min(816px, calc(100vw - 56px));
+  min-height: 1056px;
+  margin: 0 auto;
+  padding: 72px 78px;
+  color: #202124;
+  background: #fff;
+  box-shadow: var(--page-shadow);
+  line-height: 1.55;
+  transform-origin: top center;
+}
+
+.word-page img {
+  max-width: 100%;
+  height: auto;
+}
+
+.word-page table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.word-page th,
+.word-page td {
+  padding: 5px 7px;
+  border: 1px solid #aeb4bb;
+}
+
+.word-page a {
+  color: #075fbd;
+}
+
+.excel-view {
+  min-height: calc(100vh - var(--toolbar-height));
+}
+
+.sheet-tabs {
+  position: sticky;
+  z-index: 12;
+  top: var(--toolbar-height);
+  display: flex;
+  gap: 2px;
+  overflow-x: auto;
+  padding: 6px 8px 0;
+  border-bottom: 1px solid var(--vscode-panel-border);
+  background: var(--vscode-editor-background);
+}
+
+.sheet-tab {
+  flex: none;
+  max-width: 220px;
+  overflow: hidden;
+  border: 0;
+  border-radius: 4px 4px 0 0;
+  color: var(--vscode-foreground);
+  background: var(--vscode-tab-inactiveBackground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-tab.active {
+  border-bottom: 2px solid var(--vscode-focusBorder);
+  background: var(--vscode-tab-activeBackground);
+}
+
+.table-host {
+  overflow: auto;
+  max-width: 100%;
+  transform-origin: top left;
+}
+
+.sheet-table {
+  border-spacing: 0;
+  border-collapse: separate;
+  color: var(--vscode-editor-foreground);
+  background: var(--vscode-editor-background);
+  font-family: var(--vscode-editor-font-family);
+  font-size: var(--vscode-editor-font-size);
+  table-layout: fixed;
+}
+
+.sheet-table th,
+.sheet-table td {
+  min-width: 120px;
+  max-width: 360px;
+  height: 25px;
+  overflow: hidden;
+  padding: 3px 7px;
+  border-right: 1px solid var(--vscode-panel-border);
+  border-bottom: 1px solid var(--vscode-panel-border);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.sheet-table thead th {
+  position: sticky;
+  z-index: 5;
+  top: calc(var(--toolbar-height) + 35px);
+  min-width: 120px;
+  background: var(--vscode-editorGroupHeader-tabsBackground);
+  text-align: center;
+}
+
+.sheet-table .row-number {
+  position: sticky;
+  z-index: 4;
+  left: 0;
+  min-width: 50px;
+  width: 50px;
+  background: var(--vscode-editorGroupHeader-tabsBackground);
+  text-align: right;
+  font-weight: normal;
+}
+
+.sheet-table .corner {
+  z-index: 6;
+}
+
+.pdf-view {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+  min-height: calc(100vh - var(--toolbar-height));
+  padding: 28px;
+  background: var(--vscode-sideBar-background);
+}
+
+.pdf-page {
+  align-self: flex-start;
+  max-width: none;
+  background: white;
+  box-shadow: var(--page-shadow);
+}
+
+.slides-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(560px, 100%), 1fr));
+  gap: 28px;
+  padding: 28px;
+  transform-origin: top center;
+}
+
+.text-slide {
+  position: relative;
+  aspect-ratio: 16 / 9;
+  overflow: auto;
+  padding: 48px;
+  color: #202124;
+  background: #fff;
+  box-shadow: var(--page-shadow);
+  font-size: 18px;
+}
+
+.text-slide p {
+  margin: 0 0 12px;
+}
+
+.slide-number {
+  position: absolute;
+  right: 12px;
+  bottom: 8px;
+  color: #777;
+  font-size: 11px;
+}
+
+@media (max-width: 640px) {
+  .readonly-badge { display: none; }
+  .word-view, .pdf-view, .slides-view { padding: 12px; }
+  .word-page { width: calc(100vw - 24px); padding: 36px 30px; }
+  #zoom-label { display: none; }
+}
