@@ -15,14 +15,14 @@ Los formatos de Office se abren con el visor de forma predeterminada. Para PDF u
 ## Desarrollo
 
 ```bash
-npm ci
-npm run check
+pnpm install --frozen-lockfile
+pnpm run check
 ```
 
 Pulsa `F5` en VS Code para abrir una ventana de desarrollo de extensiones. También puedes crear un paquete instalable:
 
 ```bash
-npm run package
+pnpm run package
 code --install-extension dist/dev-office-viewer-0.1.0.vsix
 ```
 
@@ -38,4 +38,4 @@ Todo el procesamiento se realiza localmente. La vista de Word busca legibilidad 
 
 ## Organización del repositorio
 
-Consulta `docs/ARCHITECTURE.md`, `CONTRIBUTING.md` y `RELEASE.md`. Usa Node.js 22. `npm run watch` recompila durante el desarrollo; `npm run package` valida y genera el VSIX en `dist/`. En Windows también están disponibles los accesos de `bin/`.
+Consulta `docs/ARCHITECTURE.md`, `CONTRIBUTING.md` y `RELEASE.md`. Usa Node.js 22 y pnpm 11. `pnpm run watch` recompila durante el desarrollo; `pnpm run package` valida y genera el VSIX en `dist/`. En Windows también están disponibles los accesos de `bin/`.

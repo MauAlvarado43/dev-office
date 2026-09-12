@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0.."
-call npm ci
+call pnpm install --frozen-lockfile
 exit /b %errorlevel%

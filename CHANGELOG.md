@@ -1,6 +1,6 @@
 # Changelog
 
-## 0.1.0 — 2026-09-07
+## [0.1.0] - 2026-09-07
 
 - Organización por core, infraestructura, integraciones y presentación siguiendo dev-tracker.
 - Build y watch compartidos para host, webview y estilos.

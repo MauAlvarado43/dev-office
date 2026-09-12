@@ -1,6 +1,6 @@
 # Arquitectura
 
-La organización sigue las fronteras de `dev-tracker`, conservando JavaScript y npm del proyecto actual. No se incorporan React, SQLite ni MCP porque el visor no los necesita.
+La organización sigue las fronteras de `dev-tracker`, conservando JavaScript y usando pnpm para la instalación y los scripts del proyecto. No se incorporan React, SQLite ni MCP porque el visor no los necesita.
 
 | Ruta | Responsabilidad |
 | --- | --- |

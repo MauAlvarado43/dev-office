@@ -1,4 +1,4 @@
 @echo off
 cd /d "%~dp0.."
-call npm run package
+call pnpm run package
 exit /b %errorlevel%
