@@ -39,3 +39,7 @@ Todo el procesamiento se realiza localmente. La vista de Word busca legibilidad 
 ## Organización del repositorio
 
 Consulta `docs/ARCHITECTURE.md`, `CONTRIBUTING.md` y `RELEASE.md`. Usa Node.js 22 y pnpm 11. `pnpm run watch` recompila durante el desarrollo; `pnpm run package` valida y genera el VSIX en `dist/`. En Windows también están disponibles los accesos de `bin/`.
+
+## Configuration and portable import/export
+
+Open the gear icon or **Dev Office Viewer: Settings** in the Command Palette. The Settings tab includes general preferences, local `.devbackup` export/import, automatic backups, a configurable backup folder, optional encryption, and Google Drive setup. Exported files stay local; manual and automatic backups use the separate Drive upload switch. [Setup and recovery](docs/BACKUPS.md).

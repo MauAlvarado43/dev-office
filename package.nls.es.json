@@ -1,0 +1,23 @@
+{
+  "command.openSettings.title": "Configuración",
+  "command.exportBackup.title": "Exportar a un archivo",
+  "command.importBackup.title": "Importar archivo",
+  "command.importDriveBackup.title": "Importar desde Drive",
+  "command.configureDriveCredentials.title": "Importar credencial OAuth de Google",
+  "command.testDriveConnection.title": "Comprobar conexión con Drive",
+  "command.chooseBackupDirectory.title": "Elegir carpeta de backups",
+  "command.resetBackupDirectory.title": "Restablecer carpeta de backups",
+  "command.openBackupFolder.title": "Abrir carpeta de backups",
+  "command.openBackupSettings.title": "Configuración de importación y backups",
+  "command.connectDrive.title": "Conectar Google Drive",
+  "command.disconnectDrive.title": "Desconectar Google Drive",
+  "command.backupNow.title": "Crear backup ahora",
+  "command.restoreBackup.title": "Restaurar backup",
+  "command.setBackupPassphrase.title": "Configurar contraseña del backup",
+  "command.backupStatus.title": "Ver estado del backup",
+  "configuration.backup.uploadToDrive.description": "Subir backups manuales y automáticos cuando Drive esté conectado. Exportar a un archivo siempre es local.",
+  "configuration.backup.directory.description": "Ruta absoluta para los backups de esta extensión. Vacía usa la carpeta privada predeterminada. Las copias existentes no se mueven.",
+  "configuration.backup.googleProjectId.description": "ID opcional del proyecto de Google Cloud para los enlaces del asistente.",
+  "configuration.backup.googleCredentialsPath.description": "Ruta opcional al JSON OAuth de escritorio. La extensión obtiene el token al conectar. No se incluye en las copias.",
+  "configuration.backup.googleAuthorizationPath.description": "JSON local opcional de la sesión autorizada durante la configuración. Se importa una vez en SecretStorage; desconectar se conserva después de recargar."
+}

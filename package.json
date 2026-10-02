@@ -2,7 +2,7 @@
   "name": "dev-office-viewer",
   "displayName": "Dev Office Viewer",
   "description": "Visor local y de solo lectura para Word, Excel, PowerPoint, OpenDocument y PDF.",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "packageManager": "pnpm@11.1.3",
   "publisher": "mau-local",
   "license": "MIT",
@@ -30,7 +30,8 @@
   ],
   "main": "./dist/extension.js",
   "activationEvents": [
-    "onCommand:devOffice.openPreview"
+    "onCommand:devOffice.openPreview",
+    "onStartupFinished"
   ],
   "extensionKind": [
     "workspace"
@@ -41,6 +42,88 @@
         "command": "devOffice.openPreview",
         "title": "Office Viewer: Abrir vista previa",
         "icon": "$(preview)"
+      },
+      {
+        "command": "devOffice.openSettings",
+        "title": "%command.openSettings.title%",
+        "category": "Dev Office Viewer",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "devOffice.exportBackup",
+        "title": "%command.exportBackup.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.importBackup",
+        "title": "%command.importBackup.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.importDriveBackup",
+        "title": "%command.importDriveBackup.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.configureDriveCredentials",
+        "title": "%command.configureDriveCredentials.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.testDriveConnection",
+        "title": "%command.testDriveConnection.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.chooseBackupDirectory",
+        "title": "%command.chooseBackupDirectory.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.resetBackupDirectory",
+        "title": "%command.resetBackupDirectory.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.openBackupFolder",
+        "title": "%command.openBackupFolder.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.openBackupSettings",
+        "title": "%command.openBackupSettings.title%",
+        "category": "Dev Office Viewer",
+        "icon": "$(settings-gear)"
+      },
+      {
+        "command": "devOffice.connectDrive",
+        "title": "%command.connectDrive.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.disconnectDrive",
+        "title": "%command.disconnectDrive.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.backupNow",
+        "title": "%command.backupNow.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.restoreBackup",
+        "title": "%command.restoreBackup.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.setBackupPassphrase",
+        "title": "%command.setBackupPassphrase.title%",
+        "category": "Dev Office Viewer"
+      },
+      {
+        "command": "devOffice.backupStatus",
+        "title": "%command.backupStatus.title%",
+        "category": "Dev Office Viewer"
       }
     ],
     "customEditors": [
@@ -96,6 +179,14 @@
           "when": "resourceExtname =~ /\\.(docx?|xlsx?|pptx?|odt|ods|odp|pdf)$/i",
           "group": "navigation@15"
         }
+      ],
+      "view/title": [],
+      "editor/title": [
+        {
+          "command": "devOffice.openSettings",
+          "when": "activeCustomEditorId == devOffice.officeViewer || activeCustomEditorId == devOffice.pdfViewer",
+          "group": "navigation@99"
+        }
       ]
     },
     "configuration": {
@@ -111,14 +202,64 @@
           "default": 1000,
           "minimum": 50,
           "maximum": 10000,
-          "description": "M\u00e1ximo de filas mostradas por hoja."
+          "description": "Máximo de filas mostradas por hoja."
         },
         "devOffice.spreadsheet.maxColumns": {
           "type": "number",
           "default": 100,
           "minimum": 10,
           "maximum": 500,
-          "description": "M\u00e1ximo de columnas mostradas por hoja."
+          "description": "Máximo de columnas mostradas por hoja."
+        },
+        "devOffice.backup.autoEnabled": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Crear backups automáticos mientras VS Code está abierto."
+        },
+        "devOffice.backup.intervalMinutes": {
+          "type": "integer",
+          "default": 30,
+          "minimum": 5,
+          "maximum": 1440,
+          "scope": "machine",
+          "description": "Intervalo entre revisiones de backup, en minutos."
+        },
+        "devOffice.backup.encrypt": {
+          "type": "boolean",
+          "default": false,
+          "scope": "machine",
+          "description": "Cifrar las copias con una contraseña de recuperación."
+        },
+        "devOffice.backup.uploadToDrive": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "%configuration.backup.uploadToDrive.description%"
+        },
+        "devOffice.backup.directory": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "%configuration.backup.directory.description%"
+        },
+        "devOffice.backup.googleProjectId": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "%configuration.backup.googleProjectId.description%"
+        },
+        "devOffice.backup.googleCredentialsPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "%configuration.backup.googleCredentialsPath.description%"
+        },
+        "devOffice.backup.googleAuthorizationPath": {
+          "type": "string",
+          "default": "",
+          "scope": "machine",
+          "description": "%configuration.backup.googleAuthorizationPath.description%"
         }
       }
     }
@@ -128,9 +269,11 @@
     "build": "pnpm run clean && node esbuild.mjs",
     "watch": "node esbuild.mjs --watch",
     "lint": "node scripts/check-syntax.mjs",
-    "test": "node --test test/*.test.js",
-    "check": "pnpm run lint && pnpm run test && pnpm run build",
-    "package": "pnpm run check && node scripts/package.mjs"
+    "test": "pnpm run test:backup && node --test test/*.test.js",
+    "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run build",
+    "package": "pnpm run check && node scripts/package.mjs",
+    "typecheck": "tsc --noEmit",
+    "test:backup": "tsc -p tsconfig.test.json && node --test dist/test/test/*.test.js"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
@@ -140,8 +283,11 @@
     "sanitize-html": "^2.17.0"
   },
   "devDependencies": {
+    "@types/node": "^24.19.0",
+    "@types/vscode": "^1.90.0",
     "@vscode/vsce": "^3.9.2",
-    "esbuild": "^0.25.9"
+    "esbuild": "^0.25.9",
+    "typescript": "^5.9.3"
   },
   "overrides": {
     "uuid": "^11.1.0"

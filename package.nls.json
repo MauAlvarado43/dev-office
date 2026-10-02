@@ -1,0 +1,23 @@
+{
+  "command.openSettings.title": "Settings",
+  "command.exportBackup.title": "Export to a file",
+  "command.importBackup.title": "Import file",
+  "command.importDriveBackup.title": "Import from Drive",
+  "command.configureDriveCredentials.title": "Import Google OAuth credentials",
+  "command.testDriveConnection.title": "Check Drive connection",
+  "command.chooseBackupDirectory.title": "Choose backup folder",
+  "command.resetBackupDirectory.title": "Reset backup folder",
+  "command.openBackupFolder.title": "Open backup folder",
+  "command.openBackupSettings.title": "Import and backup settings",
+  "command.connectDrive.title": "Connect Google Drive",
+  "command.disconnectDrive.title": "Disconnect Google Drive",
+  "command.backupNow.title": "Create backup now",
+  "command.restoreBackup.title": "Restore backup",
+  "command.setBackupPassphrase.title": "Set backup passphrase",
+  "command.backupStatus.title": "Show backup status",
+  "configuration.backup.uploadToDrive.description": "Upload manual and automatic backups when Drive is connected. Export to a file always stays local.",
+  "configuration.backup.directory.description": "Absolute path for this extension’s backups. Empty uses the private default folder. Existing snapshots are not moved.",
+  "configuration.backup.googleProjectId.description": "Optional Google Cloud project ID used by setup links.",
+  "configuration.backup.googleCredentialsPath.description": "Optional Desktop OAuth JSON path. The extension obtains tokens when connecting. Excluded from snapshots.",
+  "configuration.backup.googleAuthorizationPath.description": "Optional local authorized-user JSON generated during setup. Imported once into VS Code SecretStorage; disconnect remains disconnected after reload."
+}

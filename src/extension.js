@@ -2,8 +2,12 @@ const vscode = require('vscode');
 const path = require('node:path');
 const { OFFICE_VIEW_TYPE, PDF_VIEW_TYPE } = require('./core/constants');
 const { OfficeViewerProvider } = require('./presentation/host/office-viewer-provider');
+const { BackupController, initializeLocal } = require('./infrastructure/backup/host');
+const { settingsAdapter } = require('./infrastructure/backup/settings-adapter');
 
-function activate(context) {
+async function activate(context) {
+  const data = await initializeLocal(context, 'devOffice');
+  context.subscriptions.push(new BackupController(context, 'devOffice', data.root, settingsAdapter()));
   const provider = new OfficeViewerProvider(context);
   context.subscriptions.push(
     vscode.window.registerCustomEditorProvider(OFFICE_VIEW_TYPE, provider, {
