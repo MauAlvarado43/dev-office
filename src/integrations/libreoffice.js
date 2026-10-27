@@ -6,6 +6,7 @@ const { execFile } = require('node:child_process');
 const { promisify } = require('node:util');
 const { safeFileName } = require('../core/utils');
 const execFileAsync = promisify(execFile);
+const conversions = new Map();
 
 async function convertToPdf(context, uri) {
     const stat = await vscode.workspace.fs.stat(uri);
@@ -15,6 +16,18 @@ async function convertToPdf(context, uri) {
       .digest('hex')
       .slice(0, 20);
     const outputDirectory = vscode.Uri.joinPath(context.globalStorageUri, 'conversions', fingerprint);
+    const key = outputDirectory.toString();
+    if (conversions.has(key)) return conversions.get(key);
+    const conversion = runConversion(outputDirectory, uri);
+    conversions.set(key, conversion);
+    try {
+      return await conversion;
+    } finally {
+      conversions.delete(key);
+    }
+  }
+
+async function runConversion(outputDirectory, uri) {
     await vscode.workspace.fs.createDirectory(outputDirectory);
 
     const sourceName = safeFileName(path.basename(uri.path));
@@ -33,13 +46,16 @@ async function convertToPdf(context, uri) {
     const candidates = configured
       ? [configured]
       : process.platform === 'win32'
-        ? ['soffice.exe', 'libreoffice.exe']
-        : ['libreoffice', 'soffice'];
+        ? [path.join(process.env.ProgramFiles || 'C:\\Program Files', 'LibreOffice', 'program', 'soffice.exe'), 'soffice.exe', 'libreoffice.exe']
+        : process.platform === 'darwin'
+          ? ['/Applications/LibreOffice.app/Contents/MacOS/soffice', 'libreoffice', 'soffice']
+          : ['libreoffice', 'soffice'];
 
     let lastError;
     for (const executable of candidates) {
       try {
         await execFileAsync(executable, [
+          `-env:UserInstallation=${vscode.Uri.joinPath(outputDirectory, 'profile').toString()}`,
           '--headless', '--convert-to', 'pdf', '--outdir', outputDirectory.fsPath, sourceUri.fsPath
         ], { timeout: 90_000, windowsHide: true });
         await fs.access(outputUri.fsPath);

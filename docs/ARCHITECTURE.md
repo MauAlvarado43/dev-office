@@ -15,7 +15,9 @@ La organización sigue las fronteras de `dev-tracker`, conservando JavaScript y 
 
 Flujo: VS Code → proveedor → servicio de documentos → lector o LibreOffice → payload → webview.
 
-El host interpreta `ready`, `reload` y `openLink`. Publica `loading`, `document` o `error`. Los payloads discriminan `word`, `excel`, `pdf` y `powerpoint-text` mediante `kind`.
+El host interpreta `ready`, `reload`, `openLink`, `openExternal` y `openSettings`. Publica `loading`, `document`, `error` o `actionError`. Valida los esquemas de los enlaces antes de abrirlos; los archivos relativos se resuelven desde el documento original. Los payloads discriminan `word`, `excel`, `pdf` y `powerpoint-text` mediante `kind`.
+
+El webview carga PDF.js bajo demanda y cancela las tareas anteriores al recargar o cambiar de página. PDF combina canvas, capa de texto y enlaces. `core/search.js` calcula offsets de búsquedas literales; `webview/text-index.js` los conecta con rangos DOM y CSS Highlights. La búsqueda recorre todas las páginas del PDF y todas las hojas cargadas de Excel. El estado de lectura se guarda con `webview.setState`.
 
 Para añadir un formato, actualiza el manifiesto, el servicio y las pruebas; añade un renderizador al webview solamente si requiere un payload nuevo. Las utilidades compartidas no deben depender de VS Code. Los lectores no generan el HTML de la aplicación.
 

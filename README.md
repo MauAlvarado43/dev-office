@@ -12,6 +12,17 @@ Extensión de VS Code para abrir documentos de oficina en modo de solo lectura y
 
 Los formatos de Office se abren con el visor de forma predeterminada. Para PDF usa **Reabrir editor con… → Office Viewer: PDF** o ejecuta **Office Viewer: Abrir vista previa**.
 
+## Controles de la vista previa
+
+- **Buscar** o `Ctrl/Cmd+F`: búsqueda literal con resaltado, contador y opción de distinguir mayúsculas. `Enter` y `Mayús+Enter` recorren los resultados; `Esc` cierra la búsqueda.
+- **Word**: enlaces web, correo, archivos relativos al documento y marcadores internos. El índice lateral permite navegar por títulos.
+- **PDF**: texto seleccionable, búsqueda en todas las páginas, enlaces y marcadores, salto a página, botones anterior/siguiente y teclas `PageUp`/`PageDown`. Los PDF escaneados sin texto necesitan OCR externo para poder buscarlos.
+- **Excel**: búsqueda en todas las hojas visibles cargadas, cambiando de hoja al avanzar entre coincidencias. Las hojas ocultas no se muestran. Si el libro supera los límites configurados, se indica que la vista y la búsqueda son parciales.
+- **Zoom** entre 25% y 300%, restablecer al pulsar el porcentaje y **Ajustar ancho**. Se conserva la página, hoja, zoom y posición al recargar la vista.
+- **Abrir externo**: abre el archivo local con la aplicación predeterminada. Los errores incluyen detalles, reintento y acceso a la configuración de LibreOffice.
+
+El comando de vista previa usa el archivo compatible activo o permite elegir otro. También aparece en la barra del editor y admite extensiones en mayúsculas.
+
 ## Desarrollo
 
 ```bash
@@ -23,7 +34,7 @@ Pulsa `F5` en VS Code para abrir una ventana de desarrollo de extensiones. Tambi
 
 ```bash
 pnpm run package
-code --install-extension dist/dev-office-viewer-0.1.0.vsix
+code --install-extension dist/dev-office-viewer-0.1.2.vsix
 ```
 
 ## Configuración
@@ -35,6 +46,8 @@ code --install-extension dist/dev-office-viewer-0.1.0.vsix
 ## Privacidad y límites
 
 Todo el procesamiento se realiza localmente. La vista de Word busca legibilidad y no replica todos los detalles de maquetación. Excel muestra valores calculados guardados en el archivo, pero no ejecuta macros ni vuelve a calcular fórmulas. Los archivos protegidos con contraseña no son compatibles.
+
+PDF.js se carga únicamente al abrir un PDF, de modo que sus fallos no bloquean Word o Excel. LibreOffice usa un perfil aislado para evitar conflictos con una instancia de escritorio abierta.
 
 ## Organización del repositorio
 

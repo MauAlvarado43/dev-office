@@ -19,6 +19,11 @@ async function activate(context) {
     vscode.commands.registerCommand('devOffice.openPreview', async (uri) => {
       let target = uri;
       if (!target) {
+        const active = vscode.window.activeTextEditor?.document.uri ||
+          vscode.window.tabGroups.activeTabGroup.activeTab?.input?.uri;
+        if (active && /\.(docx?|xlsx?|pptx?|odt|ods|odp|pdf)$/i.test(active.path)) target = active;
+      }
+      if (!target) {
         const selection = await vscode.window.showOpenDialog({
           canSelectMany: false,
           openLabel: 'Abrir en Office Viewer',

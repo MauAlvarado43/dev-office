@@ -2,7 +2,7 @@
   "name": "dev-office-viewer",
   "displayName": "Dev Office Viewer",
   "description": "Visor local y de solo lectura para Word, Excel, PowerPoint, OpenDocument y PDF.",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "packageManager": "pnpm@11.1.3",
   "publisher": "mau-local",
   "license": "MIT",
@@ -132,31 +132,31 @@
         "displayName": "Office Viewer (solo lectura)",
         "selector": [
           {
-            "filenamePattern": "*.doc"
+            "filenamePattern": "*.[dD][oO][cC]"
           },
           {
-            "filenamePattern": "*.docx"
+            "filenamePattern": "*.[dD][oO][cC][xX]"
           },
           {
-            "filenamePattern": "*.xls"
+            "filenamePattern": "*.[xX][lL][sS]"
           },
           {
-            "filenamePattern": "*.xlsx"
+            "filenamePattern": "*.[xX][lL][sS][xX]"
           },
           {
-            "filenamePattern": "*.ppt"
+            "filenamePattern": "*.[pP][pP][tT]"
           },
           {
-            "filenamePattern": "*.pptx"
+            "filenamePattern": "*.[pP][pP][tT][xX]"
           },
           {
-            "filenamePattern": "*.odt"
+            "filenamePattern": "*.[oO][dD][tT]"
           },
           {
-            "filenamePattern": "*.ods"
+            "filenamePattern": "*.[oO][dD][sS]"
           },
           {
-            "filenamePattern": "*.odp"
+            "filenamePattern": "*.[oO][dD][pP]"
           }
         ],
         "priority": "default"
@@ -166,7 +166,7 @@
         "displayName": "Office Viewer: PDF",
         "selector": [
           {
-            "filenamePattern": "*.pdf"
+            "filenamePattern": "*.[pP][dD][fF]"
           }
         ],
         "priority": "option"
@@ -182,6 +182,11 @@
       ],
       "view/title": [],
       "editor/title": [
+        {
+          "command": "devOffice.openPreview",
+          "when": "resourceExtname =~ /\\.(docx?|xlsx?|pptx?|odt|ods|odp|pdf)$/i && activeCustomEditorId != devOffice.officeViewer && activeCustomEditorId != devOffice.pdfViewer",
+          "group": "navigation@10"
+        },
         {
           "command": "devOffice.openSettings",
           "when": "activeCustomEditorId == devOffice.officeViewer || activeCustomEditorId == devOffice.pdfViewer",
@@ -273,7 +278,8 @@
     "check": "pnpm run typecheck && pnpm run lint && pnpm run test && pnpm run build",
     "package": "pnpm run check && node scripts/package.mjs",
     "typecheck": "tsc --noEmit",
-    "test:backup": "tsc -p tsconfig.test.json && node --test dist/test/test/*.test.js"
+    "test:backup": "tsc -p tsconfig.test.json && node --test dist/test/test/*.test.js",
+    "test:preview": "pnpm run build && node scripts/preview-smoke.cjs"
   },
   "dependencies": {
     "exceljs": "^4.4.0",
@@ -287,6 +293,7 @@
     "@types/vscode": "^1.90.0",
     "@vscode/vsce": "^3.9.2",
     "esbuild": "^0.25.9",
+    "playwright": "1.62.1",
     "typescript": "^5.9.3"
   },
   "overrides": {

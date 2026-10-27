@@ -4,6 +4,7 @@ Usa Node.js 22 y pnpm 11. Instala dependencias con `pnpm install --frozen-lockfi
 
 - `pnpm run watch`: recompila host, webview y estilos al editar.
 - `pnpm run check`: valida sintaxis, ejecuta pruebas y compila.
+- `pnpm exec playwright install chromium` y `pnpm run test:preview`: compila y prueba la interfaz en Chromium sin abrir VS Code. Verifica Word, Excel, PDF, búsqueda, enlaces, índice, zoom, recarga, rotación y paneles estrechos. Guarda capturas en `dist/preview-*.png`. Si ya tienes Chromium, puedes indicar `PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH`.
 - `pnpm run package`: ejecuta las verificaciones y genera el VSIX en `dist/`.
 
 Pulsa F5 para iniciar el Extension Development Host. Prueba DOCX con imágenes/tablas, XLSX con varias hojas, PDF con navegación/zoom y PPTX con y sin LibreOffice. Comprueba también recarga tras modificar el archivo y cierre del panel durante la carga.

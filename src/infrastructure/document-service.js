@@ -68,15 +68,17 @@ class DocumentService {
         'figure', 'figcaption', 'sup', 'sub'
       ]),
       allowedAttributes: {
-        a: ['href', 'name'],
+        '*': ['id'],
+        a: ['href', 'name', 'title'],
         img: ['src', 'alt', 'title', 'width', 'height'],
         table: ['summary'],
         th: ['colspan', 'rowspan', 'scope'],
         td: ['colspan', 'rowspan']
       },
-      allowedSchemes: ['http', 'https', 'mailto', 'data'],
+      allowedSchemes: ['http', 'https', 'mailto', 'tel', 'data'],
+      allowProtocolRelative: false,
       allowedSchemesByTag: {
-        a: ['http', 'https', 'mailto'],
+        a: ['http', 'https', 'mailto', 'tel', 'file'],
         img: ['data']
       }
     });
@@ -100,8 +102,10 @@ class DocumentService {
     const sheets = [];
 
     workbook.eachSheet((worksheet) => {
-      const rowLimit = Math.min(worksheet.actualRowCount || worksheet.rowCount, maxRows);
-      const columnLimit = Math.min(worksheet.actualColumnCount || worksheet.columnCount, maxColumns);
+      if (worksheet.state !== 'visible') return;
+      // actualRowCount counts populated rows, not the last occupied row.
+      const rowLimit = Math.min(worksheet.rowCount, maxRows);
+      const columnLimit = Math.min(worksheet.columnCount, maxColumns);
       const rows = [];
 
       for (let rowNumber = 1; rowNumber <= rowLimit; rowNumber += 1) {
@@ -116,10 +120,9 @@ class DocumentService {
       sheets.push({
         name: worksheet.name,
         rows,
-        totalRows: worksheet.actualRowCount || worksheet.rowCount,
-        totalColumns: worksheet.actualColumnCount || worksheet.columnCount,
-        truncated: (worksheet.actualRowCount || worksheet.rowCount) > rowLimit ||
-          (worksheet.actualColumnCount || worksheet.columnCount) > columnLimit
+        totalRows: worksheet.rowCount,
+        totalColumns: worksheet.columnCount,
+        truncated: worksheet.rowCount > rowLimit || worksheet.columnCount > columnLimit
       });
     });
 
